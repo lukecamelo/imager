@@ -1,0 +1,11 @@
+<label class="image-upload-container btn btn-bwm">
+  <span>Select Image</span>
+  <input #imageInput
+    type="file"
+    accept="image/*"
+    (change)="processFile(imageInput)">
+    <ng-template [ngIf]="selectedFile">
+      <img src="{{ selectedFile.src }}" alt="">
+    </ng-template>
+    <input class="image-preview" type="submit" (click)="uploadImage(imageInput)">
+</label>

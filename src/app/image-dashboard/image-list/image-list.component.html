@@ -1,0 +1,12 @@
+<p>image-list works!</p>
+<button (click)="logImages()">log images</button>
+
+<div class="image--list__container">
+  <ul class="image--list">
+    <li *ngFor="let image of imageList">
+      <img class="image" [src]="image.src" alt="">
+      <p>{{ image.fileName}}</p>
+      <button class="image--button__delete" (click)="deleteImage(image.fileName)">Delete</button>
+    </li>
+  </ul>
+</div>

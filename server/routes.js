@@ -1,0 +1,51 @@
+const express = require('express')
+const multer = require('multer')
+const router = express.Router()
+const Image = require('./models/Image')
+const fs = require('fs')
+const path = require('path')
+
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, './storage')
+  },
+  filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + '.png')
+  }
+});
+
+const upload = multer({ storage }).single('file');
+
+const storagePath = path.join(__dirname, '/storage')
+
+let images = []
+
+const readDirectory = (path, cb) => {
+  fs.readdir(path, function(err, items) {
+    images.push(items);
+    cb(images);       
+ }); 
+}
+
+const getImages = (req, res) => {
+  readDirectory(storagePath, (images) => {
+    res.json({ files: images[0] });
+});
+}
+
+const deleteImage = (req, res) => {
+  console.log(req.body.fileName)
+  readDirectory(storagePath, images => {
+    let file = images[0].filter(img => img === req.body.fileName)
+    fs.unlink(`${storagePath}/${file}`, err => {
+      if (err) console.log("error deleting file: ", err)
+    })
+  })
+}
+
+router.post('/upload', upload, (req, res) => res.send({ fileData: req.file}))
+
+router.route('/images').get(getImages)
+router.route('/delete').post(deleteImage)
+
+module.exports = router

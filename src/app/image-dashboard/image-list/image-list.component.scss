@@ -1,0 +1,14 @@
+.image--list__container {
+
+  .image--list {
+    display: flex;
+  }
+  .image {
+    height: 300px;
+    width: 300px;
+  }
+  
+  li {
+    list-style-type: none;
+  }
+}
