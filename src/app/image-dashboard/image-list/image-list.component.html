@@ -1,12 +1,13 @@
-<p>image-list works!</p>
-<button (click)="logImages()">log images</button>
+<h1 class="font-sans text-4xl mx-4 text-grey-800">
+  Image previews
+</h1>
 
-<div class="image--list__container">
-  <ul class="image--list">
-    <li *ngFor="let image of imageList">
-      <img class="image" [src]="image.src" alt="">
-      <p>{{ image.fileName}}</p>
-      <button class="image--button__delete" (click)="deleteImage(image.fileName)">Delete</button>
+<div class="image--list__container py-2">
+  <ul class="image--list flex">
+    <li *ngFor="let image of imageList" class="flex flex-col mx-4 my-6 shadow image--li">
+      <img class="image rounded-lg px-4 py-4" [src]="image.src" alt="">
+      <p class="image__caption my-2 font-sans px-4">{{ image.fileName }}</p>
+      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-4 mb-4 rounded" (click)="deleteImage(image.fileName)">Delete</button>
     </li>
   </ul>
 </div>

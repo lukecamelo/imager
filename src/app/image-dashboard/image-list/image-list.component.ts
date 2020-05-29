@@ -34,5 +34,6 @@ export class ImageListComponent implements OnInit {
 
   deleteImage(fileName): void {
     this.http.post('http://localhost:4201/delete', { fileName }).subscribe(res => console.log(res))
+    this.imageList = this.imageList.filter(img => img.fileName !== fileName)
   }
 }

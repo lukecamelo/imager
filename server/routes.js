@@ -29,6 +29,7 @@ const readDirectory = (path, cb) => {
 
 const getImages = (req, res) => {
   readDirectory(storagePath, (images) => {
+    console.log("getImages: ", images[0])
     res.json({ files: images[0] });
 });
 }
@@ -43,7 +44,7 @@ const deleteImage = (req, res) => {
   })
 }
 
-router.post('/upload', upload, (req, res) => res.send({ fileData: req.file}))
+router.post('/upload', upload, (req, res) => res.send({ fileData: req.file }))
 
 router.route('/images').get(getImages)
 router.route('/delete').post(deleteImage)

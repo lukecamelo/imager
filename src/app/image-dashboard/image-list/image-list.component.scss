@@ -1,13 +1,26 @@
+@import '../../../output.scss';
+
 .image--list__container {
 
   .image--list {
     display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
   }
+
   .image {
-    height: 300px;
+    height: 100%;
     width: 300px;
   }
   
+  .image--li {
+    max-width: 300px;
+    border: 1px solid #f7f7f7;
+  }
+
   li {
     list-style-type: none;
   }

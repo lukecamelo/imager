@@ -17,7 +17,8 @@ app.use((req, res, next) => {
 
 app.use('/public', express.static('storage'))
 app.use(express.json())
-app.use(bodyParser({limit: '10mb'}))
+app.use(bodyParser({json: {limit: '50mb', extended: true},
+urlencoded: {limit: '50mb', extended: true}}))
 
 app.use('/', routes)
 
