@@ -10,17 +10,18 @@ let storage = multer.diskStorage({
       cb(null, './storage')
   },
   filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + '.png')
+    let fileName = req.body.imageName
+    cb(null, fileName + '-' + Date.now() + '.png')
   }
 });
 
-const upload = multer({ storage }).single('file');
+const upload = multer({ storage, limits: {fieldSize: 25 * 1024 * 1024} }).single('file');
 
 const storagePath = path.join(__dirname, '/storage')
 
-let images = []
 
 const readDirectory = (path, cb) => {
+  let images = []
   fs.readdir(path, function(err, items) {
     images.push(items);
     cb(images);       
@@ -44,7 +45,10 @@ const deleteImage = (req, res) => {
   })
 }
 
-router.post('/upload', upload, (req, res) => res.send({ fileData: req.file }))
+router.post('/upload', upload, (req, res) => {
+  console.log(req.file)
+  res.send({ fileData: req.file })
+})
 
 router.route('/images').get(getImages)
 router.route('/delete').post(deleteImage)

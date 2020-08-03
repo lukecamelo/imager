@@ -1,11 +1,21 @@
-<label class="image-upload-container btn btn-bwm">
-  <span class="mr-2">Select Image</span>
-  <input #imageInput
-    type="file"
-    accept="image/*"
-    (change)="processFile(imageInput)">
-    <ng-template [ngIf]="selectedFile">
-      <img class="rounded-lg image-preview" src="{{ selectedFile.src }}" alt="">
-    </ng-template>
-    <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" (click)="uploadImage(imageInput)">
-</label>
+<div class="container mx-auto">
+  <div class="form-group">
+    <input #imageInput
+      type="file"
+      accept="image/*"
+      (change)="processFile(imageInput)">
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">Desired filename: </span>
+    </div>
+    <input #imageNameInput type="text" class="form-control" placeholder="cool_pic" aria-label="Filename" aria-describedby="basic-addon1" (change)="updateImageName(imageNameInput.value)">
+  </div>
+
+  <ng-template [ngIf]="selectedFile">
+    <img class="rounded-lg image-preview" src="{{ selectedFile.src }}" alt="">
+  </ng-template>
+  
+  <button class="btn btn-primary" type="button" (click)="uploadImage()">Submit</button>
+</div>

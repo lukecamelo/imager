@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from '../../http.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 class ImagePreview {
@@ -18,10 +18,10 @@ interface ResponseDataI {
 export class ImageListComponent implements OnInit {
 
   public imageList: Array<ImagePreview>
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private http: HttpService, private sanitizer: DomSanitizer) { }
   
   ngOnInit(): void {
-    this.http.get('http://localhost:4201/images').subscribe((res: ResponseDataI) => {
+    this.http.getImages().subscribe((res: ResponseDataI) => {
       this.imageList = res.files.map(res => {
         return new ImagePreview(`http://localhost:4201/public/${res}`, res)
       })
@@ -33,7 +33,7 @@ export class ImageListComponent implements OnInit {
   }
 
   deleteImage(fileName): void {
-    this.http.post('http://localhost:4201/delete', { fileName }).subscribe(res => console.log(res))
+    this.http.deleteImage({ fileName }).subscribe(res => console.log(res))
     this.imageList = this.imageList.filter(img => img.fileName !== fileName)
   }
 }

@@ -2,8 +2,8 @@
   Image previews
 </h1>
 
-<div class="image--list__container py-2">
-  <ul class="image--list flex">
+<div class="image--list__container py-2 container mx-auto">
+  <ul class="image--list flex flex-wrap">
     <li *ngFor="let image of imageList" class="flex flex-col mx-4 my-6 shadow image--li">
       <img class="image rounded-lg px-4 py-4" [src]="image.src" alt="">
       <p class="image__caption my-2 font-sans px-4">{{ image.fileName }}</p>

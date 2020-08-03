@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from '../../http.service';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
@@ -11,12 +11,14 @@ class ImageSnippet {
   styleUrls: ['./image-upload.component.scss']
 })
 export class ImageUploadComponent implements OnInit {
-
+  formData: FormData
   selectedFile: ImageSnippet;
+  imageName: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
+    this.formData = new FormData()
   }
 
   processFile(imageInput: any) {
@@ -25,14 +27,19 @@ export class ImageUploadComponent implements OnInit {
 
     reader.addEventListener('load', (event: any) => {
       this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      console.log("hi!!", this.selectedFile)
     })
 
     reader.readAsDataURL(file);
   }
 
-  uploadImage(imageInput: any) {
-    this.http.post('http://localhost:4201/upload', this.selectedFile).subscribe(res => console.log("results: ", res))
+  updateImageName(imageNameInput: string) {
+    this.imageName = imageNameInput;
+  }
+  
+  uploadImage() {
+    console.log(this.imageName)
+    this.formData.append('imageName', this.imageName)
+    this.formData.append('file', this.selectedFile.file)
+    this.http.uploadImage(this.formData).subscribe(res => console.log("results: ", res))
   }
 }
