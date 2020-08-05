@@ -11,8 +11,6 @@ import { ImageDashboardModule } from './image-dashboard/image-dashboard.module'
 @NgModule({
   declarations: [
     AppComponent,
-    // ImageUploadComponent,
-    // ImageListComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +19,7 @@ import { ImageDashboardModule } from './image-dashboard/image-dashboard.module'
     CommonModule,
     ImageDashboardModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

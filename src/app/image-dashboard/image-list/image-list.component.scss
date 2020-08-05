@@ -1,4 +1,5 @@
 @import '../../../output.scss';
+@import "~bootstrap/dist/css/bootstrap.css";
 
 .image--list__container {
 
@@ -25,4 +26,8 @@
   li {
     list-style-type: none;
   }
+}
+
+.hide {
+  display: none;
 }

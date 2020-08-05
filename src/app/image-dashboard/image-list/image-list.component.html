@@ -1,10 +1,12 @@
-<h1 class="font-sans text-4xl mx-4 text-grey-800">
-  Image previews
-</h1>
+<div class="input-group">
+  <input type="text" class="form-control" id="search-text" aria-describedby="search-text" 
+    [(ngModel)]="searchText" placeholder="Enter text to search" 
+    autofocus>
+</div>
 
-<div class="image--list__container py-2 container mx-auto">
-  <ul class="image--list flex flex-wrap">
-    <li *ngFor="let image of imageList" class="flex flex-col mx-4 my-6 shadow image--li">
+<div class="image--list__container mx-auto">
+  <ul class="image--list flex-wrap justify-center">
+    <li *ngFor="let image of imageList | appFilter: searchText" class="flex flex-col mx-4 my-6 shadow image--li">
       <img class="image rounded-lg px-4 py-4" [src]="image.src" alt="">
       <p class="image__caption my-2 font-sans px-4">{{ image.fileName }}</p>
       <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-4 mb-4 rounded" (click)="deleteImage(image.fileName)">Delete</button>

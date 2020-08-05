@@ -32,7 +32,7 @@ const getImages = (req, res) => {
   readDirectory(storagePath, (images) => {
     console.log("getImages: ", images[0])
     res.json({ files: images[0] });
-});
+  });
 }
 
 const deleteImage = (req, res) => {
@@ -41,13 +41,17 @@ const deleteImage = (req, res) => {
     let file = images[0].filter(img => img === req.body.fileName)
     fs.unlink(`${storagePath}/${file}`, err => {
       if (err) console.log("error deleting file: ", err)
+      console.log("i gibe images: ", images[0])
+      res.json(images[0])
     })
   })
 }
 
 router.post('/upload', upload, (req, res) => {
-  console.log(req.file)
-  res.send({ fileData: req.file })
+  readDirectory(storagePath, (images) => {
+    console.log("getImages: ", images[0])
+    res.json(images[0]);
+  });
 })
 
 router.route('/images').get(getImages)

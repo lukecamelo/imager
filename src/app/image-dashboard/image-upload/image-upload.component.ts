@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../http.service';
+import { ImagePreview } from '../image-list/image-list.component';
 
-class ImageSnippet {
+class Image {
   constructor(public src: string, public file: File) {}
 }
 
@@ -11,11 +12,16 @@ class ImageSnippet {
   styleUrls: ['./image-upload.component.scss']
 })
 export class ImageUploadComponent implements OnInit {
-  formData: FormData
-  selectedFile: ImageSnippet;
-  imageName: string;
+  public formData: FormData
+  public selectedFile: Image;
+  public imageName: string;
+  public imageList: Array<ImagePreview>
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService) { 
+    http.apiData$.subscribe(images => this.imageList = images.files.map(res => {
+      return new ImagePreview(`http://localhost:4201/public/${res}`, res)
+    }))
+  }
 
   ngOnInit(): void {
     this.formData = new FormData()
@@ -26,20 +32,21 @@ export class ImageUploadComponent implements OnInit {
     const reader = new FileReader();
 
     reader.addEventListener('load', (event: any) => {
-      this.selectedFile = new ImageSnippet(event.target.result, file);
+      this.selectedFile = new Image(event.target.result, file);
     })
 
     reader.readAsDataURL(file);
   }
 
-  updateImageName(imageNameInput: string) {
-    this.imageName = imageNameInput;
-  }
   
   uploadImage() {
     console.log(this.imageName)
     this.formData.append('imageName', this.imageName)
     this.formData.append('file', this.selectedFile.file)
-    this.http.uploadImage(this.formData).subscribe(res => console.log("results: ", res))
+    this.http.uploadImage(this.formData).subscribe(res => {
+      console.log("uploaded image, ", res)
+      this.http.setImageList(res)
+    })
+    // this.http.setImageList()
   }
 }

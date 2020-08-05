@@ -1,4 +1,4 @@
-<div class="container mx-auto">
+<div class="mx-auto mb-8">
   <div class="form-group">
     <input #imageInput
       type="file"
@@ -8,9 +8,9 @@
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1">Desired filename: </span>
+      <span class="input-group-text" id="basic-addon1">Filename: </span>
     </div>
-    <input #imageNameInput type="text" class="form-control" placeholder="cool_pic" aria-label="Filename" aria-describedby="basic-addon1" (change)="updateImageName(imageNameInput.value)">
+    <input [(ngModel)]="imageName" type="text" class="form-control" placeholder="cool_pic" aria-label="Filename" aria-describedby="basic-addon1">
   </div>
 
   <ng-template [ngIf]="selectedFile">
